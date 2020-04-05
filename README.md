@@ -1,6 +1,14 @@
-# flask-chatterbot
+# COVID19IndiaChatbot (Unofficial)
 
-#### A web implementation of [ChatterBot](https://github.com/gunthercox/ChatterBot) using Flask.
+#### An unofficial web implementation of [ChatterBot](https://github.com/gunthercox/ChatterBot) using Flask for tracking COVID 19 India Cases.
+
+#### Data Source:
+Thanks to the amazing team working at https://github.com/covid19india/api for the data source. A volunteer-driven API for COVID-19 stats & patient tracing in India (Unofficial).
+
+
+## The website is live and running at:
+
+
 
 ## Local Setup:
  1. Ensure that Python, Flask, SQLAlchemy, and ChatterBot are installed (either manually, or run `pip install -r requirements.txt`).
