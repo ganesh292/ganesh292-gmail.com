@@ -7,8 +7,7 @@ Thanks to the amazing team working at https://github.com/covid19india/api for th
 
 
 ## The website is live and running at:
-
-
+https://covid19-india-chatbot.herokuapp.com/
 
 ## Local Setup:
  1. Ensure that Python, Flask, and ChatterBot are installed (either manually, or run `pip install -r requirements.txt`).
