@@ -1,2 +1,2 @@
-# ganesh292-gmail.com
-COVID19 India Chatbot
+# COVID India Cases Live Tracker
+Chatbot to get realtime information on cases. Thanks to COVID19INDIA for the data source!
