@@ -139,7 +139,7 @@ class InfoAdapter(LogicAdapter):
         else:
             confidence = 0
 
-        if search_text.split()[0] == "states".lower().strip().replace(" ",""):
+        if search_text == "show states".lower().strip().replace(" ",""):
             
             text = 'List of affected states:\n' + ',\n'.join(RAW_STATES)
         
