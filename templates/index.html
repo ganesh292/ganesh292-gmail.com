@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>COVID India Cases Live Tracker</h1>
+    <h3>Chatbot to get realtime information on cases. Thanks to <a href="https:https://www.covid19india.org/">COVID19INDIA</a> for the data source!</h3>
+    <div>
+      <div id="chatbox">
+        <p class="botText"><span> Enter State/District/City name to get the latest updates </span></p>
+      </div>
+      <div id="userInput">
+        <input id="textInput" type="text" name="msg" placeholder="Message">
+        <input id="buttonInput" type="submit" value="Send">
+        <input id="clearInput" type="submit" value="Clear">
+      </div>
+      <script>
+        function getBotResponse() {
+          var rawText = $("#textInput").val();
+          var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
+          $("#textInput").val("");
+          $("#chatbox").append(userHtml);
+          document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var data_new = data.replace(/\n/g, "<br />");
+            var auto_data = data.split("\n");
+            var botHtml = '<p class="botText"><span>' + data_new + '</span></p>';
+            $("#chatbox").append(botHtml);
+            document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+          });
+        }
+        $("#textInput").keypress(function(e) {
+            if(e.which == 13) {
+                getBotResponse();
+            }
+        });
+        $("#buttonInput").click(function() {
+          getBotResponse();
+        })
+        $("#clearInput").click(function() {
+          location.reload();
+        })
+      </script>
+    </div>
+  </body>
+</html>
