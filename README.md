@@ -1,4 +1,4 @@
-# COVID19IndiaChatbot (Unofficial)
+# COVID19 India Chatbot (Unofficial)
 
 #### An unofficial web implementation of [ChatterBot](https://github.com/gunthercox/ChatterBot) using Flask for tracking COVID 19 India Cases.
 
