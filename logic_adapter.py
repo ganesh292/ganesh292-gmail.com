@@ -2,7 +2,9 @@ from chatterbot.logic import LogicAdapter
 from chatterbot.conversation import Statement
 import requests
 
-
+RAW_STATES = set()
+RAW_CITIES = set()
+RAW_DISTRICTS = set()
 #Utility Functions
 
 def get_master_data():
@@ -16,10 +18,14 @@ def get_master_data():
     for each in data["raw_data"]:
 
         if each["detectedstate"]!='':
+
+            RAW_STATES.add(each["detectedstate"])
             STATES.add(each["detectedstate"].lower().strip().replace(" ",""))
         if each["detecteddistrict"]!='':
+            RAW_DISTRICTS.add(each["detecteddistrict"])
             DISTRICTS.add(each["detecteddistrict"].lower().strip().replace(" ",""))
         if each["detectedcity"]!='':
+            RAW_CITIES.add(each["detectedcity"])
             CITIES.add(each["detectedcity"].lower().strip().replace(" ",""))
     STATES = list(filter(None, STATES))
     DISTRICTS = list(filter(None, DISTRICTS))
@@ -133,23 +139,17 @@ class InfoAdapter(LogicAdapter):
         else:
             confidence = 0
 
-        if search_text == "show STATES":
+        if search_text.split()[0] == "states".lower().strip().replace(" ",""):
             
-            text = 'List of affected STATES:\n' + ','.join(STATES)
-            selected_statement = Statement(text=text)
-            selected_statement.confidence = confidence
+            text = 'List of affected states:\n' + ',\n'.join(RAW_STATES)
         
-        elif search_text == "show DISTRICTS":
+        elif search_text == "show districts".lower().strip().replace(" ",""):
 
-            text = 'List of affected DISTRICTS:\n' + ','.join(DISTRICTS)
-            selected_statement = Statement(text=text)
-            selected_statement.confidence = confidence
+            text = 'List of affected districts:\n' + ',\n'.join(RAW_DISTRICTS)
         
-        elif search_text == "show cities":
+        elif search_text == "show cities".lower().strip().replace(" ",""):
         
-            text = 'List of affected cities:\n' + ','.join(CITIES)
-            selected_statement = Statement(text=text)
-            selected_statement.confidence = confidence
+            text = 'List of affected cities:\n' + ',\n'.join(RAW_CITIES)
 
         elif search_text in STATES:
 
@@ -166,8 +166,7 @@ class InfoAdapter(LogicAdapter):
         
         else:
             text="No reported cases found for {}. Note: This could be because the name doesn't match"\
-                    "our database. Type show STATES or show DISTRICTS or show cities".format(search_text)
-            selected_statement.confidence = confidence
+                 "our database. Type 'show states' or 'show districts' or 'show cities'".format(search_text)
         
         selected_statement = Statement(text=text)
         selected_statement.confidence = confidence

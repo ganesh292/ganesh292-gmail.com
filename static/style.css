@@ -6,6 +6,11 @@ body {
     
 }
 
+p {
+    overflow: hidden;
+    max-width: 75ch;
+  }
+
 h1 {
     color: black;
     margin-bottom: 0;
@@ -65,7 +70,7 @@ h3 {
 
 .botText {
     color:  #2F4F4F;
-    font-family: system-ui;
+    font-family: monospace;
     font-size: 17px;
     text-align: left;
     line-height: 30px;
