@@ -1,6 +1,7 @@
 from chatterbot.logic import LogicAdapter
 from chatterbot.conversation import Statement
 import requests
+import operator
 
 RAW_STATES = set()
 RAW_CITIES = set()
@@ -168,6 +169,68 @@ class InfoAdapter(LogicAdapter):
             text="No reported cases found for {}. Note: This could be because the name doesn't match"\
                  "our database. Type 'show states' or 'show districts' or 'show cities'".format(search_text)
         
+        selected_statement = Statement(text=text)
+        selected_statement.confidence = confidence
+
+        return selected_statement
+
+class SortAdapter(LogicAdapter):
+    
+    def __init__(self, chatbot, **kwargs):
+        super().__init__(chatbot, **kwargs)
+
+    def can_process(self, statement):
+
+        if 'top' in statement.text.lower().strip().replace(" ",""):
+            return True
+        else:
+            return False
+    
+    def process(self, input_statement, additional_response_selection_parameters):
+        """
+        Process chatbot responses
+        """
+        
+        search_text = input_statement.text.lower().split()
+        number = search_text[1]
+
+        if not number.isnumeric():
+            text = "reload"
+
+        # Let's base the confidence value on if the request was successful
+        if RAW_RESPONSE.status_code == 200:
+            confidence = 1
+        else:
+            confidence = 0
+        
+        if search_text[2].lower().strip().replace(" ","") == "states":
+            text = ""
+            data = STATE_RESPONSE.json()['statewise']
+
+            for entry in data[0:int(number)+1]:
+                if entry["state"]!="Total":
+                    text+= entry["state"] + '-' + entry["confirmed"] + '\n'
+            text=text.strip()
+    
+        elif search_text[2].lower().strip().replace(" ","") == "districts":
+
+            state = search_text[-1].lower().strip().replace(" ","")
+            data = DISTRICT_RESPONSE.json()
+            text = ""
+
+            # Get District data
+            for entry in data:
+                if entry["state"].lower().strip().replace(" ","")== state:
+    
+                    data = entry["districtData"]
+                    sorted_data = sorted(data, key=operator.itemgetter('confirmed'), reverse=True)
+                    for entry in sorted_data[0:int(number)]:
+                        text+= entry["district"] + '-' + str(entry["confirmed"]) + '\n'
+                    break
+        
+        if text=="":
+            text = "Unable to find State/District. Please try with correct format"
+
         selected_statement = Statement(text=text)
         selected_statement.confidence = confidence
 

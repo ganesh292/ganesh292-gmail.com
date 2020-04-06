@@ -8,6 +8,9 @@ english_bot = ChatBot("Chatterbot",
                                         'import_path': 'logic_adapter.InfoAdapter'
                                         },
                                         {
+                                            'import_path': 'logic_adapter.SortAdapter'
+                                        },
+                                        {
             'import_path': 'chatterbot.logic.BestMatch',
             'default_response': 'Sorry. Make sure the State/District/City name is accurate',
             'maximum_similarity_threshold': 0.95

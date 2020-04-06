@@ -6,13 +6,17 @@
   </head>
   <body>
     <h1>COVID India Cases Live Tracker</h1>
-    <h3>Chatbot to get realtime information on cases. Thanks to <a href="https:https://www.covid19india.org/">COVID19INDIA</a> for the data source!</h3>
+    <h3>Chat Interface to get realtime information on cases. Thanks to <a href="https:https://www.covid19india.org/">COVID19INDIA</a> for the data source!</h3>
     <div>
       <div id="chatbox">
         <p class="botText"><span> Welcome! To get started you could: </span></p>
-        <p class="botText"><span> Enter State/District/City name to get the latest updates with case history</span></p>
-        <p class="botText"><span> Optionally you could type "10 states" to get top 10 affected states </span></p>
-        <p class="botText"><span> Optionally you could type "10 districts" to get top 10 affected districts </span></p>
+        <p class="botText"><span> 1. Enter State/District/City name to get the latest updates with case history</span></p>
+        <p class="botText"><span> 2. Type "Top 10 states" to get Top 10 affected States </span></p>
+        <p class="botText"><span> 3. Type "Top 10 districts of #State name(No spaces) " to get top 10 affected districts 
+          of a particular state
+        </span></p>
+        <p class="botText"><span> 4. Type "Show states/districts/cities" to get the complete list
+        </span></p>
       </div>
       <div id="userInput">
         <input id="textInput" type="text" name="msg" placeholder="Message">
@@ -27,11 +31,24 @@
           $("#chatbox").append(userHtml);
           document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
           $.get("/get", { msg: rawText }).done(function(data) {
-            var data_new = data.replace(/\n/g, "<br />");
-            var auto_data = data.split("\n");
-            var botHtml = '<p class="botText"><span>' + data_new + '</span></p>';
-            $("#chatbox").append(botHtml);
-            document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+
+            if (data=='reload'){
+              data_new = "Sorry Invalid selection. Please try again"
+              var botHtml = '<p class="botText"><span>' + data_new + '</span></p>';
+              $("#chatbox").append(botHtml);
+              document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+              setTimeout(location.reload.bind(location), 1000);
+            }
+            else{
+
+              var data_new = data.replace(/\n/g, "<br />");
+              var auto_data = data.split("\n");
+              var botHtml = '<p class="botText"><span>' + data_new + '</span></p>';
+              $("#chatbox").append(botHtml);
+              document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+
+            }
+            
           });
         }
         $("#textInput").keypress(function(e) {
