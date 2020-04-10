@@ -17,3 +17,7 @@ https://covid19-india-chatbot.herokuapp.com/
 
 ## License
 This source is free to use, but ChatterBot does have a license which still applies and can be found on the [LICENSE](https://github.com/gunthercox/ChatterBot/blob/master/LICENSE) page.
+
+## Reference
+Thanks to https://api.covid19india.org/ for the API
+Thanks to https://github.com/vigzmv/ChatUI for the UI design
