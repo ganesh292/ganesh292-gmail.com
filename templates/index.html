@@ -1,68 +1,50 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>COVID India Cases Live Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.min.css'>
+  
     <link rel="stylesheet" type="text/css" href="/static/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/botui/build/botui.min.js"></script>
+    
+    
+
   </head>
   <body>
-    <h1>COVID India Cases Live Tracker</h1>
-    <h3>Chat Interface to get realtime information on cases. Thanks to <a href="https:https://www.covid19india.org/">COVID19INDIA</a> for the data source!</h3>
+
     <div>
-      <div id="chatbox">
-        <p class="botText"><span> Welcome! To get started you could: </span></p>
-        <p class="botText"><span> 1. Enter State/District/City name to get the latest updates with case history</span></p>
-        <p class="botText"><span> 2. Type "Top 10 states" to get Top 10 affected States </span></p>
-        <p class="botText"><span> 3. Type "Top 10 districts of #State name(No spaces) " to get top 10 affected districts 
-          of a particular state
-        </span></p>
-        <p class="botText"><span> 4. Type "Show states/districts/cities" to get the complete list
-        </span></p>
+      <div id="chatbox" class="chat">
+
+        <div class="chat-title">
+          <h1>COVID India Cases Live Tracker</h1>
+          <h2>Chat Interface to get realtime information on cases. Thanks to <a href="https://www.covid19india.org/">COVID19INDIA</a> for the data source!</h2>
+          <figure class="avatar">
+            <img src="/static/img/help.png" /></figure>
+        </div>
+
+        <div class="messages">
+          <div class="messages-content">
+          </div>
+        </div>
+
+      <div id="userInput" class="message-box">
+        <textarea id="textInput" type="text" name="msg" class="message-input" placeholder="Type message..."></textarea>
+        <button id="buttonInput" type="submit" class="message-submit">Send</button>
+        <button id="clearInput" type="submit" class="message-clear">Clear</button>
       </div>
-      <div id="userInput">
-        <input id="textInput" type="text" name="msg" placeholder="Message">
-        <input id="buttonInput" type="submit" value="Send">
-        <input id="clearInput" type="submit" value="Clear">
-      </div>
-      <script>
-        function getBotResponse() {
-          var rawText = $("#textInput").val();
-          var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
-          $("#textInput").val("");
-          $("#chatbox").append(userHtml);
-          document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-          $.get("/get", { msg: rawText }).done(function(data) {
-
-            if (data=='reload'){
-              data_new = "Sorry Invalid selection. Please try again"
-              var botHtml = '<p class="botText"><span>' + data_new + '</span></p>';
-              $("#chatbox").append(botHtml);
-              document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-              setTimeout(location.reload.bind(location), 1000);
-            }
-            else{
-
-              var data_new = data.replace(/\n/g, "<br />");
-              var auto_data = data.split("\n");
-              var botHtml = '<p class="botText"><span>' + data_new + '</span></p>';
-              $("#chatbox").append(botHtml);
-              document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-
-            }
-            
-          });
-        }
-        $("#textInput").keypress(function(e) {
-            if(e.which == 13) {
-                getBotResponse();
-            }
-        });
-        $("#buttonInput").click(function() {
-          getBotResponse();
-        })
-        $("#clearInput").click(function() {
-          location.reload();
-        })
-      </script>
+      
     </div>
+
+      <div class="bg"></div>
+      <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	    <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
+
+      <script type="text/javascript" src="static/script.js"></script>
+    
   </body>
 </html>
