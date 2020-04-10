@@ -20,4 +20,5 @@ This source is free to use, but ChatterBot does have a license which still appli
 
 ## Reference
 Thanks to https://api.covid19india.org/ for the API
+
 Thanks to https://github.com/vigzmv/ChatUI for the UI design
