@@ -6,9 +6,6 @@
 Thanks to the amazing team working at https://github.com/covid19india/api for the data source. A volunteer-driven API for COVID-19 stats & patient tracing in India (Unofficial).
 
 
-## The website is live and running at:
-http://covid19-india-chatbot.herokuapp.com/
-
 ## Local Setup:
  1. Ensure that Python, Flask, and ChatterBot are installed (either manually, or run `pip install -r requirements.txt`).
  2. Run *app.py* with `python app.py`.
